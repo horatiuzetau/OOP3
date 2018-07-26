@@ -1,0 +1,49 @@
+    string source = "C:\\Work\\Tema3\\date.in";
+
+//Deschidem fiserul
+    ifstream f(source);
+
+//Stabilim variabile in care se vor citi valorile
+    string nume_farmacie, site_farmacie;
+    int nr_farmacii, alegere,nr_vizitatori, nr_angajati, discount_farmacie;
+    double profit_farmacie;
+
+//citim numarul de farmacii
+    f >> nr_farmacii;
+
+//Facem un obiect de tip gestionare inc are vom stoca farmaciile
+    Gestionare_Farmacii g(nr_farmacii);
+
+//Contorul nostru
+    int  k = 0;
+
+    while(k < nr_farmacii){
+    //alegere este tipul farmaciei : 0 -farmacie normala, 1-farmacie online
+        f >> alegere >> nume_farmacie;
+
+        if(alegere){
+            f >> site_farmacie >> nr_vizitatori >> discount_farmacie;
+            try{
+                g += *(new F_Online(nume_farmacie, site_farmacie, nr_vizitatori, discount_farmacie));
+            }catch(bad_alloc & ba){
+                cout << ba.what();
+                system("PAUSE");
+            }
+        }else{
+            f >> nr_angajati >> profit_farmacie;
+            try{
+                g += *(new F_Normala(nume_farmacie, nr_angajati, profit_farmacie));
+            }catch(bad_alloc & ba){
+                cout << ba.what();
+                system("PAUSE");
+            }
+        }
+        k++;
+    }
+
+
+    //Afisarea listei de farmacii
+    cout << g;
+
+
+    f.close();

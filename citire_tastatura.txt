@@ -1,0 +1,30 @@
+
+    int ok = 1, k = 0;
+    const int vec_sz = 3;
+    Farmacie ** a;
+    a = new Farmacie*[vec_sz];
+
+    while(k < vec_sz){
+        Alegeri();
+        cin >> ok;
+        switch(ok){
+            case 1:
+                a[k] = new F_Normala;
+                cin >> *a[k];
+                k++;
+                break;
+            case 2:
+                a[k] = new F_Online;
+                cin >> *a[k];
+                k++;
+                break;
+            default:
+                break;
+
+        }
+    }
+
+    for(int i = 0; i < k; i++)
+        delete a[i];
+
+    delete a;
